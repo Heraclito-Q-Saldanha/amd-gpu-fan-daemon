@@ -1,0 +1,13 @@
+[Unit]
+Description="a simple daemon to control the fan curvature of amd video cards written in rust"
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/bin/amd-gpu-fan-daemon
+
+[Install]
+WantedBy=multi-user.target

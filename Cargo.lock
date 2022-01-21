@@ -3,7 +3,7 @@
 version = 3
 
 [[package]]
-name = "amd-gpu-fan"
+name = "amd-gpu-fan-daemon"
 version = "0.1.0"
 dependencies = [
  "config",
