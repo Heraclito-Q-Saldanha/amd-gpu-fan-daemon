@@ -1,0 +1,8 @@
+[package]
+name = "amd-gpu-fan"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+device = {path = "src/device"}
+config = {path = "src/config"}
