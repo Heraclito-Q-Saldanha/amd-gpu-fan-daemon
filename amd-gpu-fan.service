@@ -7,7 +7,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=root
-ExecStart=/bin/amd-gpu-fan-daemon
+ExecStart=/bin/amd-gpu-fan-daemon -rd
 
 [Install]
 WantedBy=multi-user.target
