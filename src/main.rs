@@ -24,7 +24,7 @@ fn device_list(){
 fn device_status(path: PathBuf){
 	match device::Device::new(path).update(){
 		Ok(dev) => println!("{}", dev),
-		Err(err) => println!("{}", err)
+		Err(err) => eprintln!("{}", err)
 	}
 }
 
@@ -32,16 +32,29 @@ fn device_status_list(){
 	for path in device::find(){
 		match device::Device::new(path).update(){
 			Ok(dev) => println!("{}", dev),
-			Err(err) => println!("{}", err)
+			Err(err) => eprintln!("{}", err)
 		}
 	}
 }
 
-fn run_daemon(config_path: PathBuf){
+fn run_daemon(){
 	let config = {
-		let mut path = config_path.clone();
-		path.push("devices_config.json");
-		config::load(path).unwrap_or(vec![config::Config::default()])
+		let config_path = PathBuf::from(env::var("AMD_GPU_CONFIG_FILE").unwrap_or("/etc/amd-gpu-fan/devices_config.json".to_string()));
+		match config::init(config_path.clone()){
+			Ok(_) => {
+				match config::load(config_path){
+				Ok(config) => config,
+				Err(err) => {
+					eprintln!("{}", err);
+					vec![config::Config::default()]
+				}
+			}}
+			Err(err) => {
+				eprintln!("{}", err);
+				vec![config::Config::default()]
+			}
+		}
+		
 	};
 	loop{
 		for config in &config{
@@ -51,7 +64,7 @@ fn run_daemon(config_path: PathBuf){
 				}
 				let mut device = device::Device::new(path_device.clone());
 				if let Err(e) = device.update(){
-					println!("{}", e);
+					eprintln!("{}", e);
 					continue;
 				}
 				device.pwm_state = device::PwmState::Manual;
@@ -64,7 +77,7 @@ fn run_daemon(config_path: PathBuf){
 					}
 				};
 				if let Err(e) = device.push(){
-					println!("{}", e);
+					eprintln!("{}", e);
 				}
 			}
 		}
@@ -73,14 +86,12 @@ fn run_daemon(config_path: PathBuf){
 }
 
 fn main(){
-	let config_path = PathBuf::from("/etc/amd-gpu-fan/");
-	config::init(config_path.clone()).expect("fail init config");
 	let args: Vec<String> = env::args().collect();
 	match args.len() {
 		2 => match args[1].as_str(){
 			"-dl"  | "--device-list"        => device_list(),
 			"-dsl" | "--device-status-list" => device_status_list(),
-			"-rd"  | "--run-daemon"         => run_daemon(config_path),
+			"-rd"  | "--run-daemon"         => run_daemon(),
 			_ => help()
 		},
 		3 => match args[1].as_str(){
