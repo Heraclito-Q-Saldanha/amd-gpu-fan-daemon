@@ -1,0 +1,3 @@
+#!/bin/sh
+systemctl stop amd-gpu-fan.service
+systemctl disable amd-gpu-fan.service

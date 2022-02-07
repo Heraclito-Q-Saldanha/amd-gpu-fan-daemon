@@ -1,0 +1,9 @@
+Package: amd-gpu-fan-daemon
+Version: 0.1.1
+Architecture: amd64
+Maintainer: Heráclito <heraclitoqsaldanha@gmail.com>
+Installed-Size: 3906
+Depends: systemd
+Priority: optional
+Homepage: https://github.com/Heraclito-Q-Saldanha/amd-gpu-fan-daemon
+Description: a simple daemon to control the fan curvature of amd video cards written in rust
