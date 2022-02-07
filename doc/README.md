@@ -3,6 +3,16 @@
 
 a simple daemon to control the fan curvature of amd video cards written in rust
 
+## config
+```console
+/etc/amd-gpu-fan/devices_config.json
+```
+- **path** path to device, using * all devices
+- **min** minimum temperature, fan turns off
+- **max** Maximum temperature, fan 100%
+
+![](assets/config_example.png)
+
 ## build
 #### dependencs
 - require:
@@ -29,3 +39,4 @@ sudo systemctl disable amd-gpu-fan.service
 sudo rm -f /etc/systemd/system/amd-gpu-fan.service
 sudo rm -f /bin/amd-gpu-fan-daemon
 ```
+
