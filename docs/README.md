@@ -11,6 +11,8 @@ a simple daemon to control the fan curvature of amd video cards written in rust
 - **min** minimum temperature, fan turns off
 - **max** Maximum temperature, fan 100%
 
+**example:**
+
 ![](assets/config_example.png)
 
 ## build
