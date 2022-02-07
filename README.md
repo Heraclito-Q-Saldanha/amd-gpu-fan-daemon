@@ -4,6 +4,11 @@
 a simple daemon to control the fan curvature of amd video cards written in rust
 
 ## build
+#### dependencs
+- require:
+   [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+- recommend:
+   [git](https://git-scm.com/download/)
 ```console
 git clone https://github.com/Heraclito-Q-Saldanha/amd-gpu-fan-daemon.git
 cd amd-gpu-fan-daemon
