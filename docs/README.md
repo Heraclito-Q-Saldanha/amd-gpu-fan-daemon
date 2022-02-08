@@ -12,11 +12,28 @@ a simple daemon to control the fan curvature of amd video cards written in rust
 - **max** Maximum temperature, fan 100%
 
 **example:**
-
-![](assets/config_example.png)
+```console
+[
+	{
+		"path": "*",
+		"max": 60,
+		"min": 30
+	},
+	{
+		"path": "/sys/class/drm/card0/device/hwmon/hwmon0",
+		"max": 50,
+		"min": 25
+	},
+	{
+		"path": "/sys/class/drm/card1/device/hwmon/hwmon0",
+		"max": 55,
+		"min": 20
+	}
+]
+```
 
 ## build
-#### dependencs
+**dependencs**
 - require:
    [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
 - recommend:
