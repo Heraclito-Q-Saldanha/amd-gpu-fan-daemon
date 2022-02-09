@@ -12,6 +12,9 @@ pub fn load(path_file: PathBuf) -> Result<Vec<Config>, ConfigError> {
 		Err(_) => return Err(ConfigError::Serialize{path: path_file})
 	};
 	for mut config in &mut config_list{
+		if config.min < 0{
+			config.min = 0;
+		}
 		if config.max <= config.min{
 			config.max = config.min + 1;
 		}

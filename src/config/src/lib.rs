@@ -24,8 +24,8 @@ pub struct Config{
 	pub min: i32
 }
 
-impl Config{
-	pub fn default() -> Config {
+impl Default for Config{
+	fn default() -> Config{
 		Config {
 			path: PathBuf::from("*"),
 			max: 60,

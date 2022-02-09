@@ -32,13 +32,8 @@ pub struct Device {
 	pub temp_value: i32
 }
 
-impl Device {
-	pub fn new(path: PathBuf) -> Device {
-		let mut new_device = Device::default();
-		new_device.path = path;
-		new_device
-	}
-	pub fn default() -> Device {
+impl Default for Device{
+	fn default() -> Device{
 		Device {
 			name: String::new(),
 			path: PathBuf::new(),
@@ -47,6 +42,12 @@ impl Device {
 			pwm_state: PwmState::Automatic,
 			temp_value: 0
 		}
+	}
+}
+
+impl Device {
+	pub fn new(path: PathBuf) -> Device {
+		Device{path: path, ..Default::default()}
 	}
 }
 

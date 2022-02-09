@@ -3,11 +3,10 @@ use std::fs;
 use std::path::PathBuf;
 
 pub fn init(path_file: PathBuf) -> Result<(), ConfigError> {
-	{
-		let mut path = path_file.clone();
-		path.pop();
+	if let Some(path) = path_file.parent(){
+		let path = PathBuf::new().join(path);
 		if !path.exists() {
-			if let Err(_) = fs::create_dir_all(&path) {
+			if fs::create_dir_all(&path).is_err(){
 				return Err(ConfigError::Write{path});
 			}
 		}
