@@ -43,6 +43,10 @@ git clone https://github.com/Heraclito-Q-Saldanha/amd-gpu-fan-daemon.git
 cd amd-gpu-fan-daemon
 cargo build --release
 ```
+**optional, strip the binary**
+```console
+strip target/release/amd-gpu-fan-daemon
+```
 ## install
 ```console
 sudo cp target/release/amd-gpu-fan-daemon /bin
@@ -58,4 +62,5 @@ sudo systemctl disable amd-gpu-fan.service
 sudo rm -f /etc/systemd/system/amd-gpu-fan.service
 sudo rm -f /bin/amd-gpu-fan-daemon
 ```
+
 
