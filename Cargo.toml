@@ -2,9 +2,10 @@
 
 [package]
 name = "amd-gpu-fan-daemon"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
-
+license = "MIT"
+description="a simple daemon to control the fan curvature of amd video cards written in rust"
 
 [dependencies]
 device = {path = "src/device"}
