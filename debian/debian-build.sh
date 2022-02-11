@@ -28,6 +28,7 @@ config_files(){
 	mkdir -p ./pkgroot/{etc/systemd/system,bin}
 	cp ../amd-gpu-fan.service ./pkgroot/etc/systemd/system
 	cp -r ./DEBIAN ./pkgroot
+	chmod 0755 -R ./pkgroot
 }
 
 config_control(){
@@ -42,17 +43,18 @@ pack(){
 	sha512sum ${pkgfile} > ${pkgfile}.sha512
 }
 
-
-config_files
 if (( $# > 0 ))
 then
 	if [ $1 == "--use-musl" ];
 	then
+		config_files
 		compile_musl
 	else
-		compile
+		echo "sintax error "${1}
+		exit
 	fi
 else
+	config_files
 	compile
 fi
 config_control
