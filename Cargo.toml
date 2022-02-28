@@ -4,7 +4,7 @@
 name = "amd-gpu-fan-daemon"
 version = "1.0.0"
 edition = "2021"
-license = "MIT"
+license = "Unlicense/MIT"
 description="a simple daemon to control the fan curvature of amd video cards written in rust"
 
 [dependencies]
