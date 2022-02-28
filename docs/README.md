@@ -1,66 +1,7 @@
-
 # amd-gpu-fan-daemon
 
 a simple daemon to control the fan curvature of amd video cards written in rust
 
-## config
-```console
-/etc/amd-gpu-fan/devices_config.json
-```
-- **path** path to device, using * all devices
-- **min** minimum temperature, fan turns off
-- **max** Maximum temperature, fan 100%
-
-**example:**
-```console
-[
-	{
-		"path": "*",
-		"max": 60,
-		"min": 30
-	},
-	{
-		"path": "/sys/class/drm/card0/device/hwmon/hwmon0",
-		"max": 50,
-		"min": 25
-	},
-	{
-		"path": "/sys/class/drm/card1/device/hwmon/hwmon0",
-		"max": 55,
-		"min": 20
-	}
-]
-```
-
-## build
-**dependencs**
-- require:
-   [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
-- recommend:
-   [git](https://git-scm.com/download/)
-```console
-git clone https://github.com/Heraclito-Q-Saldanha/amd-gpu-fan-daemon.git
-cd amd-gpu-fan-daemon
-cargo build --release
-```
-**optional, strip the binary**
-```console
-strip target/release/amd-gpu-fan-daemon
-```
-## install
-```console
-sudo cp target/release/amd-gpu-fan-daemon /bin
-sudo cp amd-gpu-fan.service /etc/systemd/system
-sudo systemctl enable amd-gpu-fan.service
-sudo systemctl start amd-gpu-fan.service
-```
-
-## unistall
-```console
-sudo systemctl stop amd-gpu-fan.service
-sudo systemctl disable amd-gpu-fan.service
-sudo rm -f /etc/systemd/system/amd-gpu-fan.service
-sudo rm -f /bin/amd-gpu-fan-daemon
-```
-
+- [config](config.md)
+- [install](install.md)
 
