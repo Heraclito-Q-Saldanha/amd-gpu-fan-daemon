@@ -2,19 +2,34 @@ pub mod init;
 pub mod load;
 pub mod push;
 
-use custom_error::custom_error;
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
+use std::{
+	fmt::Display,
+	path::PathBuf
+};
 
 pub use crate::init::init;
 pub use crate::load::load;
 
-custom_error!{
-	pub ConfigError
-	Read{path: PathBuf}        = @{format!("{} Failed to read config file", path.display())},
-	Write{path: PathBuf}       = @{format!("{} Failed to write config file", path.display())},
-	Serialize{path: PathBuf}   = @{format!("{} Failed to serialize config", path.display())},
-	Deserialize{path: PathBuf} = @{format!("{} Failed to Deserialize config", path.display())}
+#[derive(Debug, Clone)]
+pub enum ConfigError{
+	Read(PathBuf),
+	Write(PathBuf),
+	Serialize(PathBuf),
+	Deserialize(PathBuf)
+}
+
+impl Display for ConfigError{
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		write!(f, "{}",
+			match self {
+				Self::Serialize(path) => format!("{} Failed to serialize config", path.display()),
+				Self::Deserialize(path) => format!("{} Failed to Deserialize config", path.display()),
+				Self::Read(path) => format!("{} Failed to read config file", path.display()),
+				Self::Write(path) => format!("{} Failed to write config file", path.display())
+			}
+		)
+	}
 }
 
 #[derive(Serialize, Deserialize)]

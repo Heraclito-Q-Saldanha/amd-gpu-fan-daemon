@@ -7,7 +7,7 @@ pub fn init(path_file: PathBuf) -> Result<(), ConfigError> {
 		let path = PathBuf::new().join(path);
 		if !path.exists() {
 			if fs::create_dir_all(&path).is_err(){
-				return Err(ConfigError::Write{path});
+				return Err(ConfigError::Write(path));
 			}
 		}
 	}

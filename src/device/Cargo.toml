@@ -5,4 +5,3 @@ edition = "2018"
 
 [dependencies]
 glob = "0.3.0"
-custom_error = "1.9.2"

@@ -1,6 +1,10 @@
-use std::path::PathBuf;
-use std::{process, thread, time};
-use std::env;
+use std::{
+	path::PathBuf,
+	process,
+	thread,
+	time,
+	env
+};
 
 fn help(){
 	println!(

@@ -3,24 +3,44 @@ pub mod push;
 pub mod update;
 
 pub use crate::find::find;
-use custom_error::custom_error;
-use std::fmt;
-use std::path::PathBuf;
+use std::{
+	path::PathBuf,
+	fmt::{
+		self,
+		Display
+	}
+};
 
 pub enum PwmState{
 	None,
 	Manual,
 	Automatic
 }
-custom_error! {
-	pub DeviceError
-	NotExits{path: PathBuf}      = @{format!("{} Device not found", path.display())},
-	ReadName{path: PathBuf}      = @{format!("{} Failed to read device name", path.display())},
-	ReadPwmValue{path: PathBuf}  = @{format!("{} Failed to read pwm value", path.display())},
-	ReadPwmState{path: PathBuf}  = @{format!("{} Failed to read pwm state", path.display())},
-	ReadTempValue{path: PathBuf} = @{format!("{} Failed to read temp value", path.display())},
-	WritePwmValue{path: PathBuf} = @{format!("{} Failed to write pwm value to device", path.display())},
-	WriteState{path: PathBuf}    = @{format!("{} Failed to write pwm state to device", path.display())}
+
+
+#[derive(Debug, Clone)]
+pub enum DeviceError{
+	NotExits(PathBuf),
+	ReadName(PathBuf),
+	ReadPwmValue(PathBuf),
+	ReadPwmState(PathBuf),
+	ReadTempValue(PathBuf),
+	WritePwmValue(PathBuf),
+	WriteState(PathBuf)
+}
+
+impl Display for DeviceError{
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		write!(f, "{}", match self{
+			Self::NotExits(path) => format!("{} Device not found", path.display()),
+			Self::ReadName(path) => format!("{} Failed to read device name", path.display()),
+			Self::ReadPwmValue(path) => format!("{} Failed to read pwm value", path.display()),
+			Self::ReadPwmState(path) => format!("{} Failed to read pwm state", path.display()),
+			Self::ReadTempValue(path) => format!("{} Failed to read temp value", path.display()),
+			Self::WritePwmValue(path) => format!("{} Failed to write pwm value to device", path.display()),
+			Self::WriteState(path) => format!("{} Failed to write pwm state to device", path.display())
+		})
+	}
 }
 
 pub struct Device {
@@ -51,16 +71,21 @@ impl Device {
 	}
 }
 
-impl PwmState{
-	pub fn to_string(&self) -> String{
-		match self{
-			PwmState::None => "0",
-			PwmState::Manual => "1",
-			PwmState::Automatic => "3",
-		}.to_string()
+impl Display for PwmState{
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		f.write_str(
+			match self{
+				PwmState::None => "0",
+				PwmState::Manual => "1",
+				PwmState::Automatic => "3",
+			}
+		)
 	}
-	pub fn from_string(text: String) -> PwmState{
-		match text.as_str(){
+}
+
+impl From<&str> for PwmState{
+	fn from(text: &str) -> Self {
+		match text{
 			"0" => PwmState::None,
 			"1" => PwmState::Manual,
 			_ => PwmState::Automatic
